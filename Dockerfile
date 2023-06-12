@@ -1,5 +1,6 @@
 FROM maven:3.8.7-amazoncorretto-17 AS build
 COPY . .
+RUN rm -rf target/
 RUN mvn clean package
 
 FROM amazoncorretto:17
