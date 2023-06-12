@@ -3,7 +3,7 @@ COPY . .
 RUN mvn clean package
 
 FROM amazoncorretto:17
-COPY --from=build /target/todo-app-0.0.1.jar todo-app-0.0.1.jar
+COPY --from=build /target/todo-app-0.0.1-SNAPSHOT.jar todo-app-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "todo-app-0.0.1.jar"]
+ENTRYPOINT ["java", "-jar", "todo-app-0.0.1-SNAPSHOT.jar"]
