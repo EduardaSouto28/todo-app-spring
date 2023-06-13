@@ -1,4 +1,7 @@
 package com.example.todoapp.controller;
+
+import com.example.todoapp.model.Item;
+import com.example.todoapp.model.Lists;
 import com.example.todoapp.model.User;
 import com.example.todoapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,55 +9,47 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
-    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
+    // Recupera todos os usuários
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
+    // Cria um novo usuário
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User newUser) {
-        User createdUser = userRepository.save(newUser);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User newUser = userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User updatedUser) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isPresent()) {
-            User existingUser = userOptional.get();
-            existingUser.setName(updatedUser.getName());
-            User savedUser = userRepository.save(existingUser);
-            return new ResponseEntity<>(savedUser, HttpStatus.OK);
+    // Autentica um usuário
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        User storedUser = userRepository.findByUsername(user.getName());
+        if (storedUser != null && storedUser.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.ok().build();
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
-        userRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    // Excluir um usuário
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID userId) {
+        userRepository.deleteById(userId);
+        return ResponseEntity.noContent().build();
     }
+
 }
