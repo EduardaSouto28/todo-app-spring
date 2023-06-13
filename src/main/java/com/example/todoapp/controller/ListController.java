@@ -1,6 +1,7 @@
 package com.example.todoapp.controller;
-import com.example.todoapp.repository.ListRepository;
+
 import com.example.todoapp.model.Lists;
+import com.example.todoapp.repository.ListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
