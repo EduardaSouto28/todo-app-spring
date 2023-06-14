@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 
 
 import java.util.List;
@@ -23,19 +24,26 @@ import java.util.UUID;
 public class Item {
     @Id
     @GeneratedValue
-    private UUID id;
+    @Column(name="id", length = 50)
+    private UUID item_id;
+
+    @Column(name="name", length = 50)
+    @NotNull
     private String name;
+
+    @Column(name="isChecked")
     private boolean isChecked;
 
     @ManyToOne
+    @JoinColumn(name = "list_id")
     private List list;
 
     public UUID getId() {
-        return id;
+        return item_id;
     }
 
     public void setId(UUID id) {
-        this.id = id;
+        this.item_id = id;
     }
 
     public String getName() {

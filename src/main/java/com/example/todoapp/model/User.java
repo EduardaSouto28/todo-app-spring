@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.UUID;
 
@@ -17,19 +18,26 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class User {
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID user_id;
+
+    @Column(name="name", length = 50)
+    @NotNull
     private String name;
+
+    @Column(name="password", length = 10)
+    @NotNull
     private String password;
 
     public UUID getId() {
-        return id;
+        return user_id;
     }
 
     public void setId(UUID id) {
-        this.id = id;
+        this.user_id = id;
     }
 
     public String getName() {
