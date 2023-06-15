@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgres://vytjwkon:0g-SrqrpPRIYju9OxYwY9xX-2k_k7x_4@silly.db.elephantsql.com/vytjwkon
+    username: vytjwkon
+    password: 0g-SrqrpPRIYju9OxYwY9xX-2k_k7x_4
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+server:
+  port: 8080
