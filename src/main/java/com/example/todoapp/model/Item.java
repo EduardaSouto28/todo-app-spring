@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 
-
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,19 +22,19 @@ import java.util.UUID;
 public class Item {
     @Id
     @GeneratedValue
-    @Column(name="id", length = 50)
+    @Column(name = "id", length = 50)
     private UUID item_id;
 
-    @Column(name="name", length = 50)
+    @Column(name = "name", length = 50)
     @NotNull
     private String name;
 
-    @Column(name="isChecked")
+    @Column(name = "isChecked")
     private boolean isChecked;
 
     @ManyToOne
     @JoinColumn(name = "list_id")
-    private List list;
+    private Lists lists;
 
     public UUID getId() {
         return item_id;
@@ -62,11 +60,11 @@ public class Item {
         isChecked = checked;
     }
 
-    public List getList() {
-        return list;
+    public Lists getLists() {
+        return lists;
     }
 
-    public void setList(List list) {
-        this.list = list;
+    public void setLists(Lists lists) {
+        this.lists = lists;
     }
 }

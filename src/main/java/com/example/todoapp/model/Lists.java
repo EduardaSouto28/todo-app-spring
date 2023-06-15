@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -31,6 +32,9 @@ public class Lists {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "lists", cascade = CascadeType.ALL)
+    private List<Item> items;
 
     public UUID getId() {
         return list_id;
@@ -54,5 +58,9 @@ public class Lists {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 }
