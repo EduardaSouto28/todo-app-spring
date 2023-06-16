@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EntityScan(basePackages = {
 //        "br.unicap.si.aos.springboot.model"
 //})
-@EnableJpaRepositories(basePackages = {
-		"com.example.todoapp.repository"
-})
+//@EnableJpaRepositories(basePackages = {
+//		"com.example.todoapp.repository"
+//})
 public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
