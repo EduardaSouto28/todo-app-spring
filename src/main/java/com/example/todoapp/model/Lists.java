@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name="lists")
+@Table(name="todo_lists")
 public class Lists {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

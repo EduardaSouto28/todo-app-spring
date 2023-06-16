@@ -7,13 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT u FROM User u WHERE u.name = ?1 AND u.password = ?2")
-    User findByNameAndPassword(String name, String password);
+    @Query("SELECT u FROM User u WHERE u.name = :name AND u.password = :password")
+    User findByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
-    @Query("SELECT l FROM User u JOIN u.lists l WHERE l.id = ?1 AND u.id = ?2")
-    Lists findListByIdAndUserId(Long listId, Long userId);
+    @Query("SELECT l FROM User u JOIN u.lists l WHERE l.id = :listId AND u.id = :userId")
+    Lists findListByIdAndUserId(@Param("listId") Long listId, @Param("userId") Long userId);
 
-//    @Query("SELECT i FROM User u JOIN u.lists l JOIN l.items i WHERE i.id = :itemId AND l.id = :listId AND u.id = :userId")
-//    Item findItemByIdAndListIdAndUserId(Long itemId, Long listId, Long userId);
-
+    // @Query("SELECT i FROM User u JOIN u.lists l JOIN l.items i WHERE i.id = :itemId AND l.id = :listId AND u.id = :userId")
+    // Item findItemByIdAndListIdAndUserId(@Param("itemId") Long itemId, @Param("listId") Long listId, @Param("userId") Long userId);
 }
