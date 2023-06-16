@@ -1,39 +1,27 @@
 package com.example.todoapp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
-
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-
 public class User {
     @Id
     @GeneratedValue
     private UUID user_id;
 
-    @Column(name="name", length = 50)
-    @NotNull
     private String name;
 
-    @Column(name="password", length = 10)
-    @NotNull
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(targetEntity=Item.class, fetch=FetchType.EAGER)
+    @JoinColumn(name="list_id")
     private List<Lists> lists;
 
     public UUID getId() {

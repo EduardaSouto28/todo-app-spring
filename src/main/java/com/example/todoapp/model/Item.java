@@ -1,38 +1,29 @@
 package com.example.todoapp.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
-
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import org.antlr.v4.runtime.misc.NotNull;
+
+
 @Entity
-@Table(name = "items")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Item {
     @Id
     @GeneratedValue
-    @Column(name = "id", length = 50)
     private UUID item_id;
 
-    @Column(name = "name", length = 50)
-    @NotNull
     private String name;
 
-    @Column(name = "isChecked")
     private boolean isChecked;
 
-    @ManyToOne
+    @ManyToOne(targetEntity=List.class, fetch=FetchType.EAGER)
     @JoinColumn(name = "list_id")
     private Lists lists;
 
