@@ -7,15 +7,19 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="item")
+@Table(name="items")
 public class Item {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
     private boolean isChecked;
+
+    @ManyToOne
+    @JoinColumn(name = "list_id")
+    private Lists lists;
 
     public Lists getLists() {
         return lists;
@@ -24,10 +28,6 @@ public class Item {
     public void setLists(Lists lists) {
         this.lists = lists;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "list_id")
-    private Lists lists;
 
     public Long getId() {
         return id;

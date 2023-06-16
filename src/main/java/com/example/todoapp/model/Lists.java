@@ -1,5 +1,6 @@
 package com.example.todoapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -7,21 +8,20 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name="list")
+@Table(name="lists")
 public class Lists {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @OneToMany(targetEntity=Item.class, fetch=FetchType.EAGER)
-    @JoinColumn(name="itemId")
-    private List<Item> items;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "lists", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Item> items = new ArrayList<>();
 
     public Long getId() {
         return id;
